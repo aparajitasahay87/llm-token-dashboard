@@ -1,0 +1,10 @@
+dash
+plotly
+fastapi
+uvicorn
+httpx
+supabase
+python-dotenv
+openai
+pandas
+requests
