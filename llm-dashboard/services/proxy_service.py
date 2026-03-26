@@ -6,6 +6,15 @@ import httpx
 from config.database import db
 from llm_models import UsageLogModel
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 app = FastAPI(title="LLM Token Dashboard Proxy")
 
@@ -134,8 +143,9 @@ async def proxy_openai(path: str, request: Request):
         "Content-Type":  "application/json"
     }
 
-    target_url = f"{OPENAI_BASE_URL}/v1/{path}"
-
+    #target_url = f"{OPENAI_BASE_URL}/v1/{path}"
+    clean_path = path.replace("v1/", "") 
+    target_url = f"{OPENAI_BASE_URL}/v1/{clean_path}"
     try:
         async with httpx.AsyncClient(timeout=120) as client:
             response = await client.post(
