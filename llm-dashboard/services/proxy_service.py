@@ -1,13 +1,13 @@
 import time
 import uuid
 from fastapi import FastAPI, Request, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import httpx
 from config.database import db
 from llm_models import UsageLogModel
 from datetime import datetime
-from fastapi.middleware.cors import CORSMiddleware
-
+app = FastAPI(title="LLM Token Dashboard Proxy")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 
-app = FastAPI(title="LLM Token Dashboard Proxy")
+
 
 OPENAI_BASE_URL = "https://api.openai.com"
 
